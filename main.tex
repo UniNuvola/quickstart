@@ -33,7 +33,7 @@
 % Title and Author Information
 \title{Quickstart guide for UniNuvola usage}
 \author{Marco Pezzella}
-\date{18/10/2024}
+\date{20/11/2024}
 
 \maketitle
 
@@ -45,13 +45,30 @@ Welcome to this quickstart guide for using UniNuvola. This is not a comprehensiv
 
 \section{Accessing the server}
 
-You can access UniNuvola via any web browser through the website \href{https://what-if.xkcd.com/1/}{https://what-if.xkcd.com/1/}. If it is your first time accessing the server, you will be redirected to a small form page, where you can request access. Access will be granted once one of the operators approves your request. When accepted, or if you already have an account, you will be redirected to the UniNuvola Vault login page. After selecting the LDAP option in the drop-down menu, you can enter your login details. These are the same as those you use to access the University email.
+You can access UniNuvola via web browser, using the University VPN, through the  \href{https://www.uninuvola.unipg.it/}{https://www.uninuvola.unipg.it/} website. You will be redirected to the UniNuvola Vault login page. After selecting the LDAP option (Figure \ref{fig:login}) in the drop-down menu, you can enter your login details: these are the same as those you use to access the University services (user id and password). If it is your first time accessing the server, you will be redirected to a web page  where you will automatically request access to the infrastructure. Access will be granted once one of the operators approves your request (Figure \ref{fig:pending}). If you already have an account, or after you get accepted you will redirected to the image and resources selection page. 
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{login_page.png}
+    \caption{UniNuvola's login page.}
+    \label{fig:login}
+\end{figure}
+
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{request_page.png}
+    \caption{Pending acceptance page}
+    \label{fig:pending}
+\end{figure}
 
 \section{Selection of the Image and resources}
 
-\textbf{Note:} This section will undergo further modifications within the next month, and the quickstart will be updated accordingly.
+\textbf{Note:} This section will undergo further modifications within the next month, and the quickstart will be updated accordingly. \\
 
-After a successful login, you will be directed to the resource selection page. The first section to complete is the image selection. This part needs to be filled in by the user. Images can be selected from those available in UniNuvola (see table \ref{tab:images}) or from your own customised version on Dockerhub. The tags \textit{latest} and \textit{deployed} are available.\\
+After a successful login, you will be directed to the resource selection page. The first section to complete is the image selection. This part needs to be filled in by the user or select one of the available options. Images can be selected from those available in UniNuvola (see table \ref{tab:images}) or from your own customised version on Dockerhub. The tags \textit{latest} and \textit{deployed} are available in our harbor repository.\\
 
 \begin{table}[]
 \caption{List of the official images in UniNuvola}
@@ -59,44 +76,87 @@ After a successful login, you will be directed to the resource selection page. T
 \centering
 \begin{tabular}{|c|c|}
 \hline
-Base & Row 1, Col 2 \\ \hline
-Engineering & Row 2, Col 2 \\ \hline
-Conda & Row 3, Col 2 \\ \hline
-Chemistry & Row 4, Col 2 \\ \hline
-Quantum Computing & Row 5, Col 2 \\ \hline
-Genomics & Row 6, Col 2 \\ \hline
-Hydraulics & Row 7, Col 2 \\ \hline
-Tensorflow & Row 8, Col 2 \\ \hline
-Pytorch & Row 9, Col 2 \\ \hline
-Pytorch-GPU & Row 10, Col 2 \\ \hline
+Base & harbor1.fisgeo.unipg.it/uninuvola/base \\ \hline
+Engineering & harbor1.fisgeo.unipg.it/uninuvola/engineering \\ \hline
+Conda &harbor1.fisgeo.unipg.it/uninuvola/conda \\ \hline
+Chemistry & harbor1.fisgeo.unipg.it/uninuvola/chemistry \\ \hline
+Quantum Computing & harbor1.fisgeo.unipg.it/uninuvola/quantumcomputing \\ \hline
+Genomics & harbor1.fisgeo.unipg.it/uninuvola/genomics \\ \hline
+Hydraulics & harbor1.fisgeo.unipg.it/uninuvola/hydraulics \\ \hline
+Tensorflow & harbor1.fisgeo.unipg.it/uninuvola/tensorflow  \\ \hline
+Pytorch & harbor1.fisgeo.unipg.it/uninuvola/pytorch \\ \hline
+Pytorch-GPU & harbor1.fisgeo.unipg.it/uninuvola/pytorchgpu \\ \hline
+Optimisation & harbor1.fisgeo.unipg.it/uninuvola/optimisation \\ \hline
 \end{tabular}
 \end{table}
 
 
 The image name will appear as: 
 \begin{lstlisting}[language=bash] 
-Shall we play a game
+harbor1.fisgeo.unipg.it/uninuvola/base:deployed
 \end{lstlisting}
 
-In the next drop-down menus, you will choose the number of CPUs required (N1, N2, N3), the amount of RAM required (R1, R2, R3), and, if you require GPUs, the number of them (G1, G2, G3). At the moment,  a S1 gigabyte of persistent storage is available for each user.\\
+In the next drop-down menus, you will choose the number of CPUs required (1, 2, 4, 8, 16, 32), the amount of RAM required (4 Gb, 8 Gb, 16 Gb, 32 Gb), and, if you require GPUs, the number of them (0, 1, 2, 3, 4). At the moment, 100 gigabyte of persistent storage are available for each user (Figure \ref{fig:resources}).\\
 
-As per the disclaimer, remember: \textbf{UniNuvola is a prototype. We provide computational power and storage, but data are not backed up. Be careful with your data!} \\
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{resource_selection.png}
+    \caption{Resources selection page}
+    \label{fig:resources}
+\end{figure}
+
+As per the disclaimer in Figure \ref{fig:pending}, remember: \textbf{UniNuvola is a prototype. We provide computational power and storage, but data are not backed up. Be careful with your data!} \\
 
 \section{Inside UniNuvola}
-The main page of UniNuvola appears as depicted in Figure \ref{fig:uninuvola_main_page}. The top bar allows some management actions and some customisation of the user interface. Most importantly, inside the file men, you can find the disconnect and  the control hub options. The former allows to connect and disconnect from Jupyter (be aware that you will disconnect from the Hub page, but the pod will continue run up to XX from inactivity), the later option allows to kill the running image and it allows the user to load a new image. \\ 
+The main page of UniNuvola appears as depicted in Figure \ref{fig:uninuvola_main_page}. The top bar allows some management actions and some customisation of the user interface. Most importantly, inside the file men, you can find the disconnect and  the control hub options. The former allows to connect and disconnect from Jupyter (be aware that you will disconnect from the Hub page, but the pod will continue run up to 12 hours after becoming inactive), the later option allows to kill the running image and it allows the user to load a new image. \\ 
 
-the left side of the menu allows the management of the local files and, in future, to mount filesystems containing large size program files and libraries. The four most upper options allow the user in order to: open new launchers tabs, create new directories, upload files, and refresh the browser. \\
+the left side of the menu allows the management of the local files. The four most upper options allow the user in order to: open new launchers tabs, create new directories, upload files, and refresh the browser. Files can be moved through the web interface or through remote terminal connection from UniNuvola to the machine hosting the files.\\
 
 The orange square includes all Python and R toolkits. The top part includes all the environments notebooks in the image, the bottom part instead the relative consoles. The top right part, the purple square, contains the Xpra notebook, that allows the usage of programs requiring a graphical interface.  \\
 
-in the last line, the first element, circled in green, allows the user to use a terminal. All terminals will start with the sh/bash terminal depending on the image. The elements circled in blue are the text editors in the Hub,  in the case of the figure a general text editor, a Markdown and a Python file editor. \\ 
+In the last line, the first element, circled in green, allows the user to use a terminal. All terminals will start with the sh/bash terminal depending on the image. The elements circled in blue are the text editors in the Hub,  in the case of the figure a general text editor, a Markdown and a Python file editor. \\ 
 
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\linewidth]{uninuvola.pdf}
-    \caption{Caption}
+    \caption{Example of Jupyter Lab interface in UniNuvola.}
     \label{fig:uninuvola_main_page}
 \end{figure}
+
+Each user has the possibility of create 5 Jupyter  named nodes that can be used as scratch space. The option can be found in the Hub Control Panel into the File menu. Figure \ref{fig:uninuvola_multi} shows an example page. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.90\linewidth]{multiserver.png}
+    \caption{Named server page example}
+    \label{fig:uninuvola_multi}
+\end{figure}
+
+\section{Activation of the conda environment}
+The first time an user enters in UniNuvola or deletes the .bashrc, conda is not active in the terminal. At this stage the process can be done manually following these steps:
+\begin{lstlisting}[language=bash] 
+/opt/conda/condabin/conda  init
+source ~/.bashrc
+\end{lstlisting}
+Afterwards, you will be able to use conda as in any other environment.
+
+\section{Troubleshooting}
+\subsection{Multiple readdressing into the login page}
+If you didn't logout after your account creation, or your token expired, it is possible that in the following session you can be readdressed into the login page.  In order to solve the issue you can opt for two solutions:
+\begin{itemize}
+    \item[\textbf{I}] disconnect by hand from the UniNuvola Vault page.  
+    \item[\textbf{II}] delete the cookies in your browser. 
+\end{itemize}
+
+To achieve the fist step, you will need to connect to the \href{https://vault.uninuvola.unipg.it:8200/ui/vault/dashboard}{UniNuvola Vault webpage}, press on the icon representing a person and than click logout. Figure \ref{img:logout} shows the process.      \\
+\begin{figure}[!h]
+    \center
+    \includegraphics[width=0.8\linewidth]{vault.png}
+    \caption{Uninvola's Vault logout page.}
+    \label{img:logout}
+\end{figure}
+
+Afterwards you should be able to reaccess to UniNuvola.
 
 \end{document}
